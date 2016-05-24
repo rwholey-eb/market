@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Marketplace</title>
+    </head>
+    <body>
+        {% if not isAuth %}
+            {% include 'login.html' %}
+        {% elif isAuth %}
+            <h1> Marketplace</h1>
+            <form action='/auth/logout'>
+                <button>Log Out</button>
+            </form>
+            {% include 'venue_form.html'%}
+            {% include 'venue_display.html'%}
+        {% endif %}
+    </body>
+</html>

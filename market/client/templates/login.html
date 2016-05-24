@@ -1,0 +1,11 @@
+<h3>Log in</h3>
+<form id="login" action="/auth/login" method="post">
+    {% csrf_token %}
+    <label for='username'>Username:
+        <input type='text' name='username' value='{{username}}' />
+    </label>
+    <label for='password'>Password:
+        <input type='password' name='password' value='{{password}}' />
+    </label>
+    <input type="submit" />
+</form>
