@@ -28,7 +28,6 @@ def string_to_number(string):
         return 0
 
 def venue_post(request):
-    import pdb; pdb.set_trace()
     venue_obj = dict(urlparse.parse_qsl(request.body))
     v = Venues(
         name=venue_obj['name'],
