@@ -8,4 +8,9 @@
         <input type='password' name='password' value='{{password}}' />
     </label>
     <input type="submit" />
+    {% if desired_name_in_use %}
+        <div><span>
+            Apologies, that username is already taken.
+        </span></div>>
+    {% endif %}
 </form>

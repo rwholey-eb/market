@@ -29,7 +29,7 @@ def string_to_number(string):
 
 def venue_post(request):
     venue_obj = dict(urlparse.parse_qsl(request.body))
-    v = Venue(
+    v = Venues(
         name=venue_obj['name'],
         location=venue_obj['location'],
         capacity=string_to_number(venue_obj['capacity']),
