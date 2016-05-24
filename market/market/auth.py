@@ -10,8 +10,8 @@ from django.template import loader
 def redirect_signup(request, user_raw={}):
     return loadTemplate(request, 'signup.html')
 
-def redirect_login(request):
-    return loadTemplate(request, 'login.html')
+def redirect_login(request, args={}):
+    return loadTemplate(request, 'login.html', args)
 
 def loadTemplate(request, template, args={}):
     t = loader.get_template(template)
@@ -26,8 +26,8 @@ def app_signup(request):
         return redirect_signup(request)
     elif (request.method == 'POST'):
         user_raw = dict(urlparse.parse_qsl(request.body))
-        if User.objects.get(username=user_raw['username']):
-            return loadTemplate(request, 'signup.html', {desired_name_in_use: True})
+        if(User.objects.filter(username=user_raw['username'])):
+            return loadTemplate(request, 'signup.html', {'desired_name_in_use': True})
         user = User.objects.create_user(username=user_raw['username'], password=user_raw['password'])
         user_auth = authenticate(username=user_raw['username'], password=user_raw['password'])
         login(request, user_auth)
@@ -37,7 +37,7 @@ def app_signup(request):
 
 def app_login(request):
     if (request.method == 'GET'):
-        return redirect_login(request)
+        return redirect_login(request, {'incorrect_login':False})
     elif (request.method == 'POST'):
         user_raw = dict(urlparse.parse_qsl(request.body))
         user_auth = authenticate(username=user_raw['username'], password=user_raw['password'])
@@ -48,6 +48,6 @@ def app_login(request):
             else:
                 return HttpResponse('user has been disabled')
         else:
-            return redirect_signup(request, user_raw)
+            return redirect_login(request, {'incorrect_login': True})
     else:
         return HttpResponse('Request protocol not supported at auth/signup/')

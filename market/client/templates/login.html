@@ -1,4 +1,6 @@
 <h3>Log in</h3>
+<a href='/auth/signup'>Sign up</a>
+
 <form id="login" action="/auth/login" method="post">
     {% csrf_token %}
     <label for='username'>Username:
@@ -9,3 +11,9 @@
     </label>
     <input type="submit" />
 </form>
+
+{% if incorrect_login %}
+<div>
+    <span style="color:red">Username or password is incorrect</span>
+</div>
+{% endif %}
